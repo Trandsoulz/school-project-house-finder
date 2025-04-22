@@ -21,12 +21,7 @@ import {
 } from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/app/components/header";
-
-type PageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
+import { use } from "react";
 
 // Mock data for houses
 const houses = [
@@ -152,12 +147,19 @@ const houses = [
   },
 ];
 
-export default function HouseDetailPage({ params }: PageProps) {
-  const houseId = Number.parseInt(params.id);
+export default function HouseDetailPage({
+  params,
+}: {
+  params: Promise<{
+    id: string;
+  }>;
+}) {
+  const { id } = use(params);
+  const houseId = Number.parseInt(id);
   const house = houses.find((h) => h.id === houseId) || houses[0];
 
   // Similar properties (excluding current one)
-  const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3);
+  //   const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3);
 
   return (
     <div className="flex min-h-screen flex-col mx-auto max-w-[90rem]">
@@ -421,36 +423,34 @@ export default function HouseDetailPage({ params }: PageProps) {
           <section className="mt-16">
             <h2 className="mb-6 text-2xl font-bold">Similar Properties</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {similarProperties.map((property) => (
+              {[1, 2, 3].map((property) => (
                 <Link
-                  href={`/houses/${property.id}`}
-                  key={property.id}
+                  href={`/houses/${property}`}
+                  key={property}
                   className="group"
                 >
                   <div className="overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md">
                     <div className="aspect-video w-full overflow-hidden">
                       <Image
-                        src={property.images[0] || "/placeholder.svg"}
+                        src={`img-${property}` || "/placeholder.svg"}
                         width={500}
                         height={300}
-                        alt={property.title}
+                        alt={`image-${property}`}
                         className="h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold">{property.title}</h3>
+                      <h3 className="font-semibold">{`apartment-${property}`}</h3>
                       <div className="mt-2 flex items-center text-sm text-muted-foreground">
                         <MapPin className="mr-1 h-3 w-3" />
-                        <span>{property.location}</span>
+                        <span>{`location-${property}`}</span>
                       </div>
                       <div className="mt-4 flex items-center justify-between">
-                        <span className="font-bold">
-                          ${property.price.toLocaleString()}
-                        </span>
+                        <span className="font-bold">$1000</span>
                         <div className="flex gap-2 text-sm text-muted-foreground">
-                          <span>{property.beds} beds</span>
+                          <span>{`bed-${property}`} beds</span>
                           <span>•</span>
-                          <span>{property.baths} baths</span>
+                          <span>{`{property}`} baths</span>
                         </div>
                       </div>
                     </div>
