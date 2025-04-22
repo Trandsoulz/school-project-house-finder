@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Home, MapPin, Phone, Mail } from "lucide-react";
+import { Search, Home, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "./components/header";
@@ -17,7 +17,7 @@ export default function LandingPage() {
               <div className="flex flex-col justify-center space-y-4 px-6">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Find Your Perfect Student Accommodation
+                    Find Your Perfect Student Accommodation
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
                     Search hundreds of student lodges near your campus. We make
