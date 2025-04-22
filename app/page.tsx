@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Search, Home, MapPin, Phone } from "lucide-react";
@@ -5,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "./components/header";
 import Footer from "./components/Footer";
+import useHouseStore from "./stores/houseStore";
 
 export default function LandingPage() {
+  const houses = useHouseStore((state) => state.houses);
   return (
     <div className="flex min-h-screen flex-col mx-auto max-w-[90rem]">
       <Header />
@@ -134,38 +138,29 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-8 py-12 md:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((i) => (
+              {houses.slice(0, 3).map((i) => (
                 <Link
-                  href={`/houses/${i}`}
-                  key={i}
+                  href={`/houses/${i.id}`}
+                  key={i.id}
                   className="group relative overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md"
                 >
                   <div className="aspect-video w-full overflow-hidden">
                     <Image
-                      src={`https://apiv1.hostel.ng/rooms/40MMQVVRPKhostelng.jpg`}
+                      src={i.image}
                       width={500}
                       height={300}
-                      alt={`Property ${i}`}
+                      alt={i.title}
                       className="object-cover w-full h-full transition-transform group-hover:scale-105"
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-lg">
-                      Modern Villa in Beverly Hills
-                    </h3>
+                    <h3 className="font-semibold text-lg">{i.title}</h3>
                     <div className="flex items-center gap-2 mt-2 text-muted-foreground">
                       <MapPin className="h-4 w-4" />
-                      <span className="text-sm">Beverly Hills, CA</span>
+                      <span className="text-sm">{i.location}</span>
                     </div>
                     <div className="flex justify-between items-center mt-4">
-                      <span className="font-bold text-lg">$1,250,000</span>
-                      <div className="flex gap-2 text-sm text-muted-foreground">
-                        <span>4 beds</span>
-                        <span>•</span>
-                        <span>3 baths</span>
-                        <span>•</span>
-                        <span>2,500 sqft</span>
-                      </div>
+                      <span className="font-bold text-lg">₦{i.price}</span>
                     </div>
                   </div>
                 </Link>

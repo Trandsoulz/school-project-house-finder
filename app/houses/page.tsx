@@ -22,7 +22,6 @@ import Header from "../components/header";
 import Footer from "../components/Footer";
 import useHouseStore from "../stores/houseStore";
 import { useState } from "react";
-import { Value } from "@radix-ui/react-select";
 
 // Mock data for houses
 // const houses = [
