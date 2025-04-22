@@ -6,6 +6,13 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/app/components/header"
 
+type PageProps = {
+    params: {
+      id: string;
+    };
+  };
+  
+
 // Mock data for houses
 const houses = [
   {
@@ -130,7 +137,7 @@ const houses = [
   },
 ]
 
-export default function HouseDetailPage({ params }: { params: { id: string } }) {
+export default function HouseDetailPage({ params }: PageProps) {
   const houseId = Number.parseInt(params.id)
   const house = houses.find((h) => h.id === houseId) || houses[0]
 
