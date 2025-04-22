@@ -1,17 +1,32 @@
-import Link from "next/link"
-import Image from "next/image"
-import { MapPin, Bed, Bath, Square, Heart, Share2, Calendar, Phone, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Header from "@/app/components/header"
+import Link from "next/link";
+import Image from "next/image";
+import {
+  MapPin,
+  Bed,
+  Bath,
+  Square,
+  Heart,
+  Share2,
+  Calendar,
+  Phone,
+  Mail,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Header from "@/app/components/header";
 
 type PageProps = {
-    params: {
-      id: string;
-    };
-  };
-  
+  params: Promise<{
+    id: string;
+  }>;
+};
 
 // Mock data for houses
 const houses = [
@@ -135,14 +150,14 @@ const houses = [
       image: "/placeholder.svg?height=200&width=200&text=Agent",
     },
   },
-]
+];
 
 export default function HouseDetailPage({ params }: PageProps) {
-  const houseId = Number.parseInt(params.id)
-  const house = houses.find((h) => h.id === houseId) || houses[0]
+  const houseId = Number.parseInt(params.id);
+  const house = houses.find((h) => h.id === houseId) || houses[0];
 
   // Similar properties (excluding current one)
-  const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3)
+  const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3);
 
   return (
     <div className="flex min-h-screen flex-col mx-auto max-w-[90rem]">
@@ -195,7 +210,10 @@ export default function HouseDetailPage({ params }: PageProps) {
       <main className="flex-1 px-[3rem]">
         <div className="container px-4 py-6 md:px-6 md:py-12">
           <div className="mb-6">
-            <Link href="/houses" className="text-sm text-muted-foreground hover:underline">
+            <Link
+              href="/houses"
+              className="text-sm text-muted-foreground hover:underline"
+            >
               &larr; Back to Properties
             </Link>
           </div>
@@ -210,7 +228,9 @@ export default function HouseDetailPage({ params }: PageProps) {
               </div>
             </div>
             <div className="flex flex-col items-end gap-2">
-              <div className="text-3xl font-bold">${house.price.toLocaleString()}</div>
+              <div className="text-3xl font-bold">
+                ${house.price.toLocaleString()}
+              </div>
               <div className="flex gap-4">
                 <Button variant="outline" size="sm" className="gap-1">
                   <Heart className="h-4 w-4" />
@@ -256,22 +276,32 @@ export default function HouseDetailPage({ params }: PageProps) {
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
                     <Bed className="mb-2 h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Bedrooms</span>
+                    <span className="text-sm text-muted-foreground">
+                      Bedrooms
+                    </span>
                     <span className="font-medium">{house.beds}</span>
                   </div>
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
                     <Bath className="mb-2 h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Bathrooms</span>
+                    <span className="text-sm text-muted-foreground">
+                      Bathrooms
+                    </span>
                     <span className="font-medium">{house.baths}</span>
                   </div>
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
                     <Square className="mb-2 h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Square Feet</span>
-                    <span className="font-medium">{house.sqft.toLocaleString()}</span>
+                    <span className="text-sm text-muted-foreground">
+                      Square Feet
+                    </span>
+                    <span className="font-medium">
+                      {house.sqft.toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
                     <Calendar className="mb-2 h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Year Built</span>
+                    <span className="text-sm text-muted-foreground">
+                      Year Built
+                    </span>
                     <span className="font-medium">{house.yearBuilt}</span>
                   </div>
                 </div>
@@ -291,23 +321,33 @@ export default function HouseDetailPage({ params }: PageProps) {
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Property Type</span>
-                      <span className="text-muted-foreground">{house.type}</span>
+                      <span className="text-muted-foreground">
+                        {house.type}
+                      </span>
                     </div>
                     <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Status</span>
-                      <span className="text-muted-foreground">{house.status}</span>
+                      <span className="text-muted-foreground">
+                        {house.status}
+                      </span>
                     </div>
                     <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Year Built</span>
-                      <span className="text-muted-foreground">{house.yearBuilt}</span>
+                      <span className="text-muted-foreground">
+                        {house.yearBuilt}
+                      </span>
                     </div>
                     <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Lot Size</span>
-                      <span className="text-muted-foreground">{house.lotSize}</span>
+                      <span className="text-muted-foreground">
+                        {house.lotSize}
+                      </span>
                     </div>
                     <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Garage</span>
-                      <span className="text-muted-foreground">{house.garage}</span>
+                      <span className="text-muted-foreground">
+                        {house.garage}
+                      </span>
                     </div>
                   </div>
                 </TabsContent>
@@ -352,7 +392,9 @@ export default function HouseDetailPage({ params }: PageProps) {
                   </div>
                   <div>
                     <h3 className="font-semibold">{house.agent.name}</h3>
-                    <p className="text-sm text-muted-foreground">Real Estate Agent</p>
+                    <p className="text-sm text-muted-foreground">
+                      Real Estate Agent
+                    </p>
                   </div>
                 </div>
                 <div className="mb-6 space-y-2">
@@ -380,7 +422,11 @@ export default function HouseDetailPage({ params }: PageProps) {
             <h2 className="mb-6 text-2xl font-bold">Similar Properties</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similarProperties.map((property) => (
-                <Link href={`/houses/${property.id}`} key={property.id} className="group">
+                <Link
+                  href={`/houses/${property.id}`}
+                  key={property.id}
+                  className="group"
+                >
                   <div className="overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md">
                     <div className="aspect-video w-full overflow-hidden">
                       <Image
@@ -398,7 +444,9 @@ export default function HouseDetailPage({ params }: PageProps) {
                         <span>{property.location}</span>
                       </div>
                       <div className="mt-4 flex items-center justify-between">
-                        <span className="font-bold">${property.price.toLocaleString()}</span>
+                        <span className="font-bold">
+                          ${property.price.toLocaleString()}
+                        </span>
                         <div className="flex gap-2 text-sm text-muted-foreground">
                           <span>{property.beds} beds</span>
                           <span>•</span>
@@ -436,7 +484,8 @@ export default function HouseDetailPage({ params }: PageProps) {
                 <span className="text-xl font-bold">HomeSeeker</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Finding your dream home made simple. Browse thousands of properties in your desired location.
+                Finding your dream home made simple. Browse thousands of
+                properties in your desired location.
               </p>
             </div>
             <div className="grid flex-1 grid-cols-2 gap-8 sm:grid-cols-3">
@@ -444,12 +493,18 @@ export default function HouseDetailPage({ params }: PageProps) {
                 <h4 className="text-sm font-medium">Company</h4>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       About
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       Careers
                     </Link>
                   </li>
@@ -459,12 +514,18 @@ export default function HouseDetailPage({ params }: PageProps) {
                 <h4 className="text-sm font-medium">Help</h4>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       FAQs
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       Contact
                     </Link>
                   </li>
@@ -474,12 +535,18 @@ export default function HouseDetailPage({ params }: PageProps) {
                 <h4 className="text-sm font-medium">Legal</h4>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       Privacy
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       Terms
                     </Link>
                   </li>
@@ -488,10 +555,12 @@ export default function HouseDetailPage({ params }: PageProps) {
             </div>
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <p className="text-xs text-muted-foreground">© 2025 HomeSeeker. All rights reserved.</p>
+            <p className="text-xs text-muted-foreground">
+              © 2025 HomeSeeker. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
