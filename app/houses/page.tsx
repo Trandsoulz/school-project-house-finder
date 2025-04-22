@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Search, MapPin, Filter, ChevronDown } from "lucide-react";
@@ -18,102 +20,89 @@ import {
 } from "@/components/ui/card";
 import Header from "../components/header";
 import Footer from "../components/Footer";
+import useHouseStore from "../stores/houseStore";
+import { useState } from "react";
+import { Value } from "@radix-ui/react-select";
 
 // Mock data for houses
-const houses = [
-  {
-    id: 135,
-    title: "Modern Villa in Beverly Hills",
-    location: "Beverly Hills, CA",
-    price: 1250000,
-    beds: 4,
-    baths: 3,
-    sqft: 2500,
-    image: "https://apiv1.hostel.ng/rooms/F948UiUShostelng.jpeg",
-  },
-  {
-    id: 64,
-    title: "Luxury Apartment in Manhattan",
-    location: "Manhattan, NY",
-    price: 950000,
-    beds: 3,
-    baths: 2,
-    sqft: 1800,
-    image: "https://apiv1.hostel.ng/rooms/Q9PSYD9FVZhostelng.jpg",
-  },
-  {
-    id: 45,
-    title: "Beachfront Condo in Miami",
-    location: "Miami Beach, FL",
-    price: 780000,
-    beds: 2,
-    baths: 2,
-    sqft: 1500,
-    image: "https://apiv1.hostel.ng/rooms/P0MSPDAB2Lhostelng.jpg",
-  },
-  {
-    id: 106,
-    title: "Mountain View Cabin",
-    location: "Aspen, CO",
-    price: 650000,
-    beds: 3,
-    baths: 2,
-    sqft: 1700,
-    image: "https://apiv1.hostel.ng/rooms/083YaYxhhostelng.jpeg",
-  },
-  {
-    id: 114,
-    title: "Downtown Loft",
-    location: "Chicago, IL",
-    price: 520000,
-    beds: 1,
-    baths: 1,
-    sqft: 1100,
-    image: "https://apiv1.hostel.ng/rooms/tZp1ozRdhostelng.jpeg",
-  },
-  {
-    id: 91,
-    title: "Suburban Family Home",
-    location: "Austin, TX",
-    price: 450000,
-    beds: 4,
-    baths: 3,
-    sqft: 2200,
-    image: "https://apiv1.hostel.ng/rooms/sgXkTMymhostelng.jpeg",
-  },
-  {
-    id: 93,
-    title: "Historic Brownstone",
-    location: "Boston, MA",
-    price: 1100000,
-    beds: 5,
-    baths: 3,
-    sqft: 3000,
-    image: "https://apiv1.hostel.ng/rooms/ln4xA8z3hostelng.jpg",
-  },
-  {
-    id: 41,
-    title: "Waterfront Estate",
-    location: "Seattle, WA",
-    price: 1750000,
-    beds: 6,
-    baths: 4,
-    sqft: 4500,
-    image: "https://apiv1.hostel.ng/rooms/8TLYZJLLW3hostelng.jpg",
-  },
-  {
-    id: 49,
-    title: "Desert Oasis Villa",
-    location: "Scottsdale, AZ",
-    price: 890000,
-    beds: 3,
-    baths: 3,
-    sqft: 2800,
-    image: "https://apiv1.hostel.ng/rooms/CZZ3KSIMR1hostelng.jpg",
-  },
-];
+// const houses = [
+//   {
+//     id: 135,
+//     title: "AKPs Residential Lodge",
+//     location: "Choba, Uniport",
+//     price: 450000,
+//     image: "https://apiv1.hostel.ng/rooms/F948UiUShostelng.jpeg",
+//   },
+//   {
+//     id: 64,
+//     title: "Shekinah Glory Lodge",
+//     location: "Alakahia, Uniport",
+//     price: 500000,
+//     image: "https://apiv1.hostel.ng/rooms/Q9PSYD9FVZhostelng.jpg",
+//   },
+//   {
+//     id: 45,
+//     title: "Olessoh Lodge",
+//     location: "Back of Chem, Uniport",
+//     price: 550000,
+//     image: "https://apiv1.hostel.ng/rooms/P0MSPDAB2Lhostelng.jpg",
+//   },
+//   {
+//     id: 106,
+//     title: "Ipweb Lodge",
+//     location: "Alakahia, Uniport",
+//     price: 600000,
+//     image: "https://apiv1.hostel.ng/rooms/083YaYxhhostelng.jpeg",
+//   },
+//   {
+//     id: 114,
+//     title: "Peace Complex Lodge",
+//     location: "Back of Chem, Uniport",
+//     price: 650000,
+//     image: "https://apiv1.hostel.ng/rooms/tZp1ozRdhostelng.jpeg",
+//   },
+//   {
+//     id: 91,
+//     title: "Kysimdy Lodge",
+//     location: "Choba, Uniport",
+//     price: 700000,
+//     image: "https://apiv1.hostel.ng/rooms/sgXkTMymhostelng.jpeg",
+//   },
+//   {
+//     id: 93,
+//     title: "Strong Tower Lodge",
+//     location: "Back of Chem, Uniport",
+//     price: 750000,
+//     image: "https://apiv1.hostel.ng/rooms/ln4xA8z3hostelng.jpg",
+//   },
+//   {
+//     id: 41,
+//     title: "Deliht Estate Lodge",
+//     location: "Choba, Uniport",
+//     price: 800000,
+//     image: "https://apiv1.hostel.ng/rooms/8TLYZJLLW3hostelng.jpg",
+//   },
+//   {
+//     id: 49,
+//     title: "GloryVille Lodge",
+//     location: "Alakahia, Uniport",
+//     price: 850000,
+//     image: "https://apiv1.hostel.ng/rooms/CZZ3KSIMR1hostelng.jpg",
+//   },
+// ];
 
 export default function HousesPage() {
+  const houses = useHouseStore((state) => state.houses);
+
+  const searchByLocation = useHouseStore((state) => state.getHousesByLocation);
+
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  // Filtered houses based on the selected location
+  const filteredHouses = selectedLocation
+    ? searchByLocation(selectedLocation)
+    : houses;
+
   return (
     <div className="flex min-h-screen flex-col mx-auto max-w-[90rem]">
       {/* <header className="sticky top-0 z-40 border-b bg-background px-[3rem]">
@@ -172,13 +161,16 @@ export default function HousesPage() {
               <div className="grid gap-4 md:grid-cols-[1fr_auto]">
                 <div className="flex flex-col gap-4 sm:flex-row">
                   <div className="relative flex-1">
-                    <Select>
+                    <Select
+                      onValueChange={(value) => setSelectedLocation(value)}
+                    >
                       <SelectTrigger id="locations" className="w-full">
                         <SelectValue placeholder="Locations" />
                       </SelectTrigger>
                       <SelectContent position="popper">
+                        <SelectItem value="uniport">All Locations</SelectItem>
                         <SelectItem value="choba">Choba</SelectItem>
-                        <SelectItem value="back-of-chem">
+                        <SelectItem value="back of chem">
                           Back of Chem
                         </SelectItem>
                         <SelectItem value="alakahia">Alakahia</SelectItem>
@@ -267,8 +259,8 @@ export default function HousesPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col gap-8">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">
-                  {houses.length} Properties Found
+                <h2 className="text-2xl font-bold md:block hidden">
+                  {filteredHouses.length} Properties Found
                 </h2>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-muted-foreground">
@@ -292,7 +284,7 @@ export default function HousesPage() {
                 </div>
               </div>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {houses.map((house) => (
+                {filteredHouses.map((house) => (
                   <Card
                     key={house.id}
                     className="overflow-hidden py-0 gap-0 rounded-sm"
@@ -314,7 +306,7 @@ export default function HousesPage() {
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-lg">
-                            ${house.price.toLocaleString()}
+                            ₦{house.price.toLocaleString()}
                           </span>
                           <div className="flex items-center text-sm text-muted-foreground">
                             <MapPin className="mr-1 h-3 w-3" />
@@ -327,11 +319,11 @@ export default function HousesPage() {
                         >
                           <h3 className="font-semibold">{house.title}</h3>
                         </Link>
-                        <div className="flex justify-between text-sm text-muted-foreground">
+                        {/* <div className="flex justify-between text-sm text-muted-foreground">
                           <span>{house.beds} beds</span>
                           <span>{house.baths} baths</span>
                           <span>{house.sqft.toLocaleString()} sqft</span>
-                        </div>
+                        </div> */}
                       </div>
                     </CardContent>
                     <CardFooter className="p-4 pt-0">

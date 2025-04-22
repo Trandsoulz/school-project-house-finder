@@ -159,7 +159,7 @@ export default function HouseDetailPage({
   const house = houses.find((h) => h.id === houseId) || houses[0];
 
   // Similar properties (excluding current one)
-  //   const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3);
+  const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3);
 
   return (
     <div className="flex min-h-screen flex-col mx-auto max-w-[90rem]">
@@ -423,34 +423,36 @@ export default function HouseDetailPage({
           <section className="mt-16">
             <h2 className="mb-6 text-2xl font-bold">Similar Properties</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((property) => (
+              {similarProperties.map((property) => (
                 <Link
-                  href={`/houses/${property}`}
-                  key={property}
+                  href={`/houses/${property.id}`}
+                  key={property.id}
                   className="group"
                 >
                   <div className="overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md">
                     <div className="aspect-video w-full overflow-hidden">
                       <Image
-                        src={`img-${property}` || "/placeholder.svg"}
+                        src={property.images[0] || "/placeholder.svg"}
                         width={500}
                         height={300}
-                        alt={`image-${property}`}
+                        alt={property.title}
                         className="h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold">{`apartment-${property}`}</h3>
+                      <h3 className="font-semibold">{property.title}</h3>
                       <div className="mt-2 flex items-center text-sm text-muted-foreground">
                         <MapPin className="mr-1 h-3 w-3" />
-                        <span>{`location-${property}`}</span>
+                        <span>{property.location}</span>
                       </div>
                       <div className="mt-4 flex items-center justify-between">
-                        <span className="font-bold">$1000</span>
+                        <span className="font-bold">
+                          ${property.price.toLocaleString()}
+                        </span>
                         <div className="flex gap-2 text-sm text-muted-foreground">
-                          <span>{`bed-${property}`} beds</span>
+                          <span>{property.beds} beds</span>
                           <span>•</span>
-                          <span>{`{property}`} baths</span>
+                          <span>{property.baths} baths</span>
                         </div>
                       </div>
                     </div>
