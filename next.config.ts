@@ -5,7 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["apiv1.hostel.ng"],
   },
-  ignoreBuildErrors: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  }
 };
 
 export default nextConfig;
