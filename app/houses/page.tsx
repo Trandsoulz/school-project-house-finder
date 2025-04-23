@@ -292,7 +292,8 @@ export default function HousesPage() {
                       <Link href={`/houses/${house.id}`}>
                         <div className="aspect-video w-full overflow-hidden">
                           <Image
-                            src={house.image || "/placeholder.svg"}
+                          priority
+                            src={house.images[0] || "/placeholder.svg"}
                             alt={house.title}
                             width={500}
                             height={300}

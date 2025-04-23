@@ -1,15 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
+import { use } from "react";
 import {
   MapPin,
   Bed,
   Bath,
-  Square,
+  // Square,
   Heart,
   Share2,
-  Calendar,
+  // Calendar,
   Phone,
   Mail,
+  Lightbulb,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,131 +27,130 @@ import {
 } from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/app/components/header";
-import { use } from "react";
+import useHouseStore from "@/app/stores/houseStore";
 
 // Mock data for houses
-const houses = [
-  {
-    id: 1,
-    title: "Modern Villa in Beverly Hills",
-    description:
-      "This stunning modern villa offers luxurious living in the heart of Beverly Hills. With spacious rooms, high ceilings, and floor-to-ceiling windows, this property is filled with natural light and offers breathtaking views of the surrounding landscape. The open-concept living area flows seamlessly into a gourmet kitchen equipped with top-of-the-line appliances and custom cabinetry. The primary suite features a spa-like bathroom and a large walk-in closet. Outside, you'll find a beautifully landscaped garden, a swimming pool, and a covered patio perfect for entertaining.",
-    location: "Beverly Hills, CA",
-    price: 1250000,
-    beds: 4,
-    baths: 3,
-    sqft: 2500,
-    yearBuilt: 2018,
-    lotSize: "0.25 acres",
-    garage: "2-car attached",
-    type: "Single Family Home",
-    status: "For Sale",
-    features: [
-      "Swimming Pool",
-      "Home Theater",
-      "Smart Home System",
-      "Gourmet Kitchen",
-      "Walk-in Closets",
-      "Hardwood Floors",
-      "Central Air Conditioning",
-      "Fireplace",
-      "Outdoor Kitchen",
-      "Security System",
-    ],
-    images: [
-      "/placeholder.svg?height=600&width=800&text=Property 1 - Image 1",
-      "/placeholder.svg?height=600&width=800&text=Property 1 - Image 2",
-      "/placeholder.svg?height=600&width=800&text=Property 1 - Image 3",
-      "/placeholder.svg?height=600&width=800&text=Property 1 - Image 4",
-    ],
-    agent: {
-      name: "Sarah Johnson",
-      phone: "(310) 555-1234",
-      email: "sarah.johnson@homeseeker.com",
-      image: "/placeholder.svg?height=200&width=200&text=Agent",
-    },
-  },
-  {
-    id: 2,
-    title: "Luxury Apartment in Manhattan",
-    description:
-      "Experience the height of luxury living in this stunning Manhattan apartment. Located in a prestigious building with 24/7 doorman and concierge services, this property offers unparalleled convenience and security. The apartment features high-end finishes throughout, including marble countertops, custom cabinetry, and hardwood floors. The gourmet kitchen is equipped with professional-grade appliances and opens to a spacious living area perfect for entertaining. Floor-to-ceiling windows provide abundant natural light and spectacular city views. The primary bedroom includes a luxurious en-suite bathroom with a soaking tub and separate shower.",
-    location: "Manhattan, NY",
-    price: 950000,
-    beds: 3,
-    baths: 2,
-    sqft: 1800,
-    yearBuilt: 2015,
-    lotSize: "N/A",
-    garage: "Parking available for purchase",
-    type: "Condominium",
-    status: "For Sale",
-    features: [
-      "Doorman Building",
-      "Concierge Service",
-      "Fitness Center",
-      "Rooftop Terrace",
-      "Floor-to-Ceiling Windows",
-      "Marble Countertops",
-      "Hardwood Floors",
-      "Central Air Conditioning",
-      "In-Unit Laundry",
-      "Pet Friendly",
-    ],
-    images: [
-      "/placeholder.svg?height=600&width=800&text=Property 2 - Image 1",
-      "/placeholder.svg?height=600&width=800&text=Property 2 - Image 2",
-      "/placeholder.svg?height=600&width=800&text=Property 2 - Image 3",
-      "/placeholder.svg?height=600&width=800&text=Property 2 - Image 4",
-    ],
-    agent: {
-      name: "Michael Chen",
-      phone: "(212) 555-5678",
-      email: "michael.chen@homeseeker.com",
-      image: "/placeholder.svg?height=200&width=200&text=Agent",
-    },
-  },
-  {
-    id: 3,
-    title: "Beachfront Condo in Miami",
-    description:
-      "Wake up to stunning ocean views in this beautiful beachfront condo in Miami Beach. This recently renovated property features an open floor plan with a modern kitchen, spacious living area, and a private balcony overlooking the Atlantic Ocean. The primary bedroom includes an en-suite bathroom with a walk-in shower and dual vanities. The second bedroom is perfect for guests or can be used as a home office. Residents enjoy access to resort-style amenities including a swimming pool, fitness center, and direct beach access. Located within walking distance to restaurants, shops, and entertainment venues.",
-    location: "Miami Beach, FL",
-    price: 780000,
-    beds: 2,
-    baths: 2,
-    sqft: 1500,
-    yearBuilt: 2010,
-    lotSize: "N/A",
-    garage: "1 assigned parking space",
-    type: "Condominium",
-    status: "For Sale",
-    features: [
-      "Ocean Views",
-      "Private Balcony",
-      "Swimming Pool",
-      "Fitness Center",
-      "Direct Beach Access",
-      "24/7 Security",
-      "Concierge Service",
-      "Pet Friendly",
-      "In-Unit Laundry",
-      "Central Air Conditioning",
-    ],
-    images: [
-      "/placeholder.svg?height=600&width=800&text=Property 3 - Image 1",
-      "/placeholder.svg?height=600&width=800&text=Property 3 - Image 2",
-      "/placeholder.svg?height=600&width=800&text=Property 3 - Image 3",
-      "/placeholder.svg?height=600&width=800&text=Property 3 - Image 4",
-    ],
-    agent: {
-      name: "Carlos Rodriguez",
-      phone: "(305) 555-9012",
-      email: "carlos.rodriguez@homeseeker.com",
-      image: "/placeholder.svg?height=200&width=200&text=Agent",
-    },
-  },
-];
+// const houses = [
+//   {
+//     id: 1,
+//     title: "Modern Studio Near State University",
+//     description:
+//       "This comfortable studio apartment is perfect for students at State University. Located just a 5-minute walk from campus, this fully furnished unit includes high-speed internet, a study desk, and a kitchenette. The building features a common laundry room, study lounge, and secure entry. Utilities are included in the rent, making budgeting easier for students. The apartment is also close to the university library, student center, and various dining options.",
+//     location: "University District, CA",
+//     price: 650,
+//     beds: 1,
+//     baths: 1,
+//     sqft: 450,
+//     yearBuilt: 2015,
+//     lotSize: "N/A",
+//     garage: "Bike storage available",
+//     type: "Studio Apartment",
+//     status: "For Rent",
+//     features: [
+//       "Fully Furnished",
+//       "High-Speed Internet",
+//       "Utilities Included",
+//       "Study Desk",
+//       "Kitchenette",
+//       "Laundry Facilities",
+//       "Security System",
+//       "5-Minute Walk to Campus",
+//       "Close to Dining",
+//       "Student Lounge",
+//     ],
+//     images: [
+//       "https://apiv1.hostel.ng/rooms/F948UiUShostelng.jpeg",
+//       "https://apiv1.hostel.ng/rooms/OKtXCGoqhostelng.jpeg",
+//       "https://apiv1.hostel.ng/rooms/96DQvMmlhostelng.jpeg",
+//       // "/placeholder.svg?height=600&width=800&text=Lodge 1 - Image 4",
+//     ],
+//     agent: {
+//       name: "Sarah Johnson",
+//       phone: "(310) 555-1234",
+//       email: "sarah.johnson@studentlodge.com",
+//       image: "/placeholder.svg?height=200&width=200&text=Landlord",
+//     },
+//   },
+//   {
+//     id: 2,
+//     title: "Shared Apartment Near Tech College",
+//     description:
+//       "This shared apartment offers a private bedroom in a 3-bedroom unit, perfect for students at Tech College. Your private room comes furnished with a bed, desk, and closet, while the common areas (kitchen, living room, and bathroom) are shared with two other students. The apartment is located just a 10-minute walk from campus and includes high-speed internet, basic utilities, and access to the building's fitness center and study room. The neighborhood has plenty of student-friendly cafes, shops, and public transportation options.",
+//     location: "College Park, NY",
+//     price: 550,
+//     beds: 1,
+//     baths: 1,
+//     sqft: 350,
+//     yearBuilt: 2010,
+//     lotSize: "N/A",
+//     garage: "Street parking available",
+//     type: "Shared Apartment",
+//     status: "For Rent",
+//     features: [
+//       "Private Bedroom",
+//       "Shared Kitchen",
+//       "Furnished",
+//       "High-Speed Internet",
+//       "Utilities Included",
+//       "Fitness Center",
+//       "Study Room",
+//       "10-Minute Walk to Campus",
+//       "Public Transportation Nearby",
+//       "Laundry Facilities",
+//     ],
+//     images: [
+//       "https://apiv1.hostel.ng/rooms/F948UiUShostelng.jpeg",
+//       "https://apiv1.hostel.ng/rooms/OKtXCGoqhostelng.jpeg",
+//       "https://apiv1.hostel.ng/rooms/96DQvMmlhostelng.jpeg",
+//     ],
+//     agent: {
+//       name: "Michael Chen",
+//       phone: "(212) 555-5678",
+//       email: "michael.chen@studentlodge.com",
+//       image: "/placeholder.svg?height=200&width=200&text=Landlord",
+//     },
+//   },
+//   {
+//     id: 3,
+//     title: "Private Room in Student House",
+//     description:
+//       "Enjoy a comfortable private room in this student-focused house just 15 minutes from campus by bus. Your room comes furnished with a bed, desk, chair, and wardrobe. The house features a large shared kitchen, two bathrooms, a cozy living room, and a small backyard perfect for relaxing after classes. All utilities and high-speed internet are included in the rent. The house is located in a quiet residential area with a grocery store, laundromat, and several affordable restaurants within walking distance. Regular bus service to campus runs every 15 minutes.",
+//     location: "Campus View, FL",
+//     price: 450,
+//     beds: 1,
+//     baths: 1,
+//     sqft: 200,
+//     yearBuilt: 2005,
+//     lotSize: "Small backyard",
+//     garage: "No parking available",
+//     type: "Private Room",
+//     status: "For Rent",
+//     features: [
+//       "Private Bedroom",
+//       "Shared Kitchen",
+//       "Shared Bathrooms",
+//       "Furnished",
+//       "All Utilities Included",
+//       "High-Speed Internet",
+//       "Backyard",
+//       "Bus to Campus",
+//       "Quiet Neighborhood",
+//       "Grocery Store Nearby",
+//     ],
+//     images: [
+//       "/placeholder.svg?height=600&width=800&text=Lodge 3 - Image 1",
+//       "/placeholder.svg?height=600&width=800&text=Lodge 3 - Image 2",
+//       "/placeholder.svg?height=600&width=800&text=Lodge 3 - Image 3",
+//       "/placeholder.svg?height=600&width=800&text=Lodge 3 - Image 4",
+//     ],
+//     agent: {
+//       name: "Carlos Rodriguez",
+//       phone: "(305) 555-9012",
+//       email: "carlos.rodriguez@studentlodge.com",
+//       image: "/placeholder.svg?height=200&width=200&text=Landlord",
+//     },
+//   },
+// ];
 
 export default function HouseDetailPage({
   params,
@@ -154,12 +159,17 @@ export default function HouseDetailPage({
     id: string;
   }>;
 }) {
+  const houses = useHouseStore((state) => state.houses);
+
   const { id } = use(params);
   const houseId = Number.parseInt(id);
   const house = houses.find((h) => h.id === houseId) || houses[0];
 
   // Similar properties (excluding current one)
-  const similarProperties = houses.filter((h) => h.id !== houseId).slice(0, 3);
+  const similarProperties = houses
+    .filter((h) => h.id !== houseId)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 4);
 
   return (
     <div className="flex min-h-screen flex-col mx-auto max-w-[90rem]">
@@ -209,7 +219,7 @@ export default function HouseDetailPage({
       </header> */}
 
       <Header />
-      <main className="flex-1 px-[3rem]">
+      <main className="flex-1 px-[1.2rem] md:px-[3rem]">
         <div className="container px-4 py-6 md:px-6 md:py-12">
           <div className="mb-6">
             <Link
@@ -248,17 +258,26 @@ export default function HouseDetailPage({
 
           {/* Property Images */}
           <div className="mb-8">
-            <Carousel className="w-full">
+            <Carousel
+              className="w-full md:w-1/2 mx-auto"
+              plugins={[
+                Autoplay({
+                  delay: 2000,
+                }),
+              ]}
+            >
               <CarouselContent>
                 {house.images.map((image, index) => (
                   <CarouselItem key={index}>
                     <div className="aspect-video overflow-hidden rounded-lg">
                       <Image
-                        src={image || "/placeholder.svg"}
+                        priority
+                        src={image}
                         alt={`${house.title} - Image ${index + 1}`}
                         width={800}
                         height={600}
                         className="h-full w-full object-cover"
+                        unoptimized // reason why the imaes are even loading in the first place, but it's slow
                       />
                     </div>
                   </CarouselItem>
@@ -275,50 +294,47 @@ export default function HouseDetailPage({
               {/* Overview */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold">Overview</h2>
+                <h3 className="text-xl font-semibold">Amenties</h3>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
                     <Bed className="mb-2 h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">
-                      Bedrooms
-                    </span>
-                    <span className="font-medium">{house.beds}</span>
+                    <span className="text-sm text-muted-foreground">Bed</span>
                   </div>
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
                     <Bath className="mb-2 h-5 w-5 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">
-                      Bathrooms
+                      Bathroom
                     </span>
-                    <span className="font-medium">{house.baths}</span>
+                    {/* <span className="font-medium"></span> */}
                   </div>
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
-                    <Square className="mb-2 h-5 w-5 text-muted-foreground" />
+                    <Lightbulb className="mb-2 h-5 w-5 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">
-                      Square Feet
+                      24/7 Electricity
                     </span>
-                    <span className="font-medium">
+                    {/* <span className="font-medium">
                       {house.sqft.toLocaleString()}
-                    </span>
+                    </span> */}
                   </div>
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-background p-4 shadow-sm">
-                    <Calendar className="mb-2 h-5 w-5 text-muted-foreground" />
+                    <Shield className="mb-2 h-5 w-5 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">
-                      Year Built
+                      Security
                     </span>
-                    <span className="font-medium">{house.yearBuilt}</span>
+                    {/* <span className="font-medium">{house.yearBuilt}</span> */}
                   </div>
                 </div>
               </div>
 
               {/* Tabs */}
-              <Tabs defaultValue="description">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="description">Description</TabsTrigger>
+              <Tabs defaultValue="details">
+                <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="details">Details</TabsTrigger>
                   <TabsTrigger value="features">Features</TabsTrigger>
                 </TabsList>
-                <TabsContent value="description" className="mt-4 space-y-4">
+                {/* <TabsContent value="description" className="mt-4 space-y-4">
                   <p className="text-muted-foreground">{house.description}</p>
-                </TabsContent>
+                </TabsContent> */}
                 <TabsContent value="details" className="mt-4">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="flex justify-between border-b py-2">
@@ -333,12 +349,12 @@ export default function HouseDetailPage({
                         {house.status}
                       </span>
                     </div>
-                    <div className="flex justify-between border-b py-2">
+                    {/* <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Year Built</span>
                       <span className="text-muted-foreground">
                         {house.yearBuilt}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="flex justify-between border-b py-2">
                       <span className="font-medium">Lot Size</span>
                       <span className="text-muted-foreground">
@@ -385,6 +401,7 @@ export default function HouseDetailPage({
                 <div className="mb-6 flex items-center gap-4">
                   <div className="h-16 w-16 overflow-hidden rounded-full">
                     <Image
+                      priority
                       src={house.agent.image || "/placeholder.svg"}
                       alt={house.agent.name}
                       width={64}
@@ -422,44 +439,66 @@ export default function HouseDetailPage({
           {/* Similar Properties */}
           <section className="mt-16">
             <h2 className="mb-6 text-2xl font-bold">Similar Properties</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {similarProperties.map((property) => (
-                <Link
-                  href={`/houses/${property.id}`}
-                  key={property.id}
-                  className="group"
-                >
-                  <div className="overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md">
-                    <div className="aspect-video w-full overflow-hidden">
-                      <Image
-                        src={property.images[0] || "/placeholder.svg"}
-                        width={500}
-                        height={300}
-                        alt={property.title}
-                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold">{property.title}</h3>
-                      <div className="mt-2 flex items-center text-sm text-muted-foreground">
-                        <MapPin className="mr-1 h-3 w-3" />
-                        <span>{property.location}</span>
-                      </div>
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="font-bold">
-                          ${property.price.toLocaleString()}
-                        </span>
-                        <div className="flex gap-2 text-sm text-muted-foreground">
+            {/* <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"> */}
+
+            <Carousel
+              className="w-full mx-auto"
+              plugins={[
+                Autoplay({
+                  delay: 2000,
+                }),
+              ]}
+            >
+              <CarouselContent>
+                {similarProperties.map((property) => (
+                  <CarouselItem
+                    className="md:basis-1/2 lg:basis-1/3"
+                    key={property.id}
+                  >
+                    <Link
+                      href={`/houses/${property.id}`}
+                      key={property.id}
+                      className="group"
+                    >
+                      <div className="overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md">
+                        <div className="aspect-video w-full overflow-hidden">
+                          <Image
+                            priority
+                            src={property.images[0] || "/placeholder.svg"}
+                            width={500}
+                            height={300}
+                            alt={property.title}
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h3 className="font-semibold">{property.title}</h3>
+                          <div className="mt-2 flex items-center text-sm text-muted-foreground">
+                            <MapPin className="mr-1 h-3 w-3" />
+                            <span>{property.location}</span>
+                          </div>
+                          <div className="mt-4 flex items-center justify-between">
+                            <span className="font-bold">
+                              ${property.price.toLocaleString()}
+                            </span>
+                            {/* <div className="flex gap-2 text-sm text-muted-foreground">
                           <span>{property.beds} beds</span>
                           <span>•</span>
                           <span>{property.baths} baths</span>
+                        </div> */}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
+
+            {/* </div> */}
           </section>
         </div>
       </main>

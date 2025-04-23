@@ -146,7 +146,7 @@ export default function LandingPage() {
                 >
                   <div className="aspect-video w-full overflow-hidden">
                     <Image
-                      src={i.image}
+                      src={i.images[0]}
                       width={500}
                       height={300}
                       alt={i.title}
