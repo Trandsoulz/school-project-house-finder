@@ -159,17 +159,17 @@ const Footer = () => {
               <h4 className="text-sm font-medium">Contact</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
+                  {/* <MapPin className="h-4 w-4 text-muted-foreground" /> */}
                   <span className="text-muted-foreground">
-                    123 Main St, New York, NY 10001
+                    123 Main street, Uniport
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
+                  {/* <Phone className="h-4 w-4 text-muted-foreground" /> */}
                   <span className="text-muted-foreground">(123) 456-7890</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  {/* <Mail className="h-4 w-4 text-muted-foreground" /> */}
                   <span className="text-muted-foreground">
                     info@studentlodge.com
                   </span>

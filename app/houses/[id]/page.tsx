@@ -8,6 +8,7 @@ import {
   MapPin,
   Bed,
   Bath,
+  User,
   // Square,
   Heart,
   Share2,
@@ -28,6 +29,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/app/components/header";
 import useHouseStore from "@/app/stores/houseStore";
+import Footer from "@/app/components/Footer";
 
 // Mock data for houses
 // const houses = [
@@ -241,7 +243,7 @@ export default function HouseDetailPage({
             </div>
             <div className="flex flex-col items-end gap-2">
               <div className="text-3xl font-bold">
-                ${house.price.toLocaleString()}
+                ₦{house.price.toLocaleString()}
               </div>
               <div className="flex gap-4">
                 <Button variant="outline" size="sm" className="gap-1">
@@ -399,15 +401,16 @@ export default function HouseDetailPage({
             <div>
               <div className="sticky top-24 rounded-lg border bg-background p-6 shadow-sm">
                 <div className="mb-6 flex items-center gap-4">
-                  <div className="h-16 w-16 overflow-hidden rounded-full">
-                    <Image
+                  <div className="h-16 w-16 flex justify-center items-center overflow-hidden rounded-full border-2 border-muted">
+                    <User className="w-[70%] h-[70%]" />
+                    {/* <Image
                       priority
                       src={house.agent.image || "/placeholder.svg"}
                       alt={house.agent.name}
                       width={64}
                       height={64}
                       className="h-full w-full object-cover"
-                    />
+                    /> */}
                   </div>
                   <div>
                     <h3 className="font-semibold">{house.agent.name}</h3>
@@ -479,7 +482,7 @@ export default function HouseDetailPage({
                           </div>
                           <div className="mt-4 flex items-center justify-between">
                             <span className="font-bold">
-                              ${property.price.toLocaleString()}
+                              ₦{property.price.toLocaleString()}
                             </span>
                             {/* <div className="flex gap-2 text-sm text-muted-foreground">
                           <span>{property.beds} beds</span>
@@ -502,7 +505,7 @@ export default function HouseDetailPage({
           </section>
         </div>
       </main>
-      <footer className="border-t bg-muted px-[3rem]">
+      {/* <footer className="border-t bg-muted px-[3rem]">
         <div className="container flex flex-col gap-6 py-8 md:py-12">
           <div className="flex flex-col gap-6 md:flex-row md:gap-8 lg:gap-12">
             <div className="flex-1 space-y-4">
@@ -601,7 +604,9 @@ export default function HouseDetailPage({
             </p>
           </div>
         </div>
-      </footer>
+      </footer> */}
+
+      <Footer />
     </div>
   );
 }

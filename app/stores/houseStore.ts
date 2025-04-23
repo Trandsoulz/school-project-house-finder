@@ -35,7 +35,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 450000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -69,7 +69,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 500000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -103,7 +103,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 550000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -137,7 +137,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 600000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -171,7 +171,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 650000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -205,7 +205,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 700000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -239,7 +239,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 750000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -273,7 +273,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 800000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
@@ -307,7 +307,7 @@ const useHouseStore = create<HouseState>((set, get) => ({
       price: 850000,
       lotSize: "N/A",
       garage: "Bike storage available",
-      type: "Studio Apartment",
+      type: "Self-Con",
       status: "For Rent",
       features: [
         "Fully Furnished",
