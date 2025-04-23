@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { Home, MapPin, Phone, Mail } from "lucide-react";
+import {
+  Home, //MapPin, //Phone, //Mail
+} from "lucide-react";
 
 const Footer = () => {
   return (
